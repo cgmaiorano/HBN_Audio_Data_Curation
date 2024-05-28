@@ -1,0 +1,5 @@
+pydub==0.25.1
+tqdm
+numpy==1.26.4
+torch==2.3.0
+torchaudio==2.3.0
