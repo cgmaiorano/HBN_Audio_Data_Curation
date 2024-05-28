@@ -6,15 +6,12 @@ import sys
 import argparse
 from pydub import AudioSegment
 
-# Assuming config.py is in the project's root directory, similar to experiments.py
 project_root_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.append(project_root_dir)
 
 def parse_arguments():
     """Parse command line arguments including hyperparameters with defaults from Config."""
     parser = argparse.ArgumentParser(description="Experiment script for session processing.")
-    # parser.add_argument("session_name", help="Name of the session")
-    # parser.add_argument("timestamp", help="Timestamp for the batch run", default="single", nargs="?")
     parser.add_argument("--data_run_folder_name", type=str, help="Path to the video folder")
     return parser.parse_args()
 
@@ -31,11 +28,6 @@ def setup_directories(base_dir, data_run):
     os.makedirs(labels, exist_ok=True)
 
     return(audio_segments, sessions, data_run_folder, labels)
-
-# def load_audio(path):
-#     waveform, sample_rate = torchaudio.load(path)
-#     waveform = waveform.squeeze()
-#     return waveform, sample_rate
 
 def speech_language_instructions(participant_speech_language_tasks_instructions, audio, audio_label_path):
     first_story = False
