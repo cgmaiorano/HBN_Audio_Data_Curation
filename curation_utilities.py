@@ -12,7 +12,7 @@ sys.path.append(project_root_dir)
 def parse_arguments():
     """Parse command line arguments including hyperparameters with defaults from Config."""
     parser = argparse.ArgumentParser(description="Experiment script for session processing.")
-    parser.add_argument("--data_run_path", type=str, help="Path to data_run")
+    parser.add_argument("--data_run", type=str, help="Path to data_run")
     parser.add_argument("--sessions", type=str, help="Path to the audios folder")
     return parser.parse_args()
 
