@@ -9,10 +9,10 @@ from curation_utilities import (
 def main():
     """This is the main function responsible for audio segment trimming and curation."""
     args = parse_arguments()
-    data_run_folder_name = args.data_run_folder_name
+    data_run_path = args.data_run
     sessions_path = args.sessions
     
-    audio_segments, sessions, data_run_path, labels = setup_directories("data", data_run_folder_name, sessions_path)
+    audio_segments, sessions, data_run_path, labels = setup_directories("data", data_run_path, sessions_path)
     sessions_list = [f for f in os.listdir(sessions) if f.endswith(".wav")]
     
     if not os.path.exists(data_run_path):
