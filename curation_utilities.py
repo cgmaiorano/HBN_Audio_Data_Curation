@@ -20,7 +20,7 @@ def setup_directories(base_dir, data_run):
     data_run_folder = os.path.join(base_dir, data_run)
     audio_segments = os.path.join(data_run_folder, "audio_segments")
     sessions = os.path.join("data", "sessions")
-    labels = os.path.join(data_run_folder, "audacity")
+    labels = os.path.join(data_run_folder, "labels")
     
     os.makedirs(data_run_folder, exist_ok=True)
     os.makedirs(audio_segments, exist_ok=True)
