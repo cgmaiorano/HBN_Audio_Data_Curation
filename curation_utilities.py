@@ -74,6 +74,10 @@ def speech_language_responses_and_stories(participant_speech_language_tasks_resp
                     segment2 = audio[float(start_time)*1000:]
                     output_file_path = os.path.join(participant_reading_language_instruction_and_response, "phonetic_kingdom.wav")
                     segment2.export(output_file_path, format='wav')
+                elif first_story is False and second_story is True:
+                    segment = audio[float(start_time)*1000:]
+                    output_file_path = os.path.join(participant_reading_language_instruction_and_response, "phonetic_kingdom.wav")
+                    segment.export(output_file_path, format='wav')
             else:
                 current_task_count = int(line[2][:2])
                 # pass over first loop
