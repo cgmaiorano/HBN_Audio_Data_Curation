@@ -19,16 +19,16 @@ def parse_arguments():
 def setup_directories(base_dir, data_run, sessions):
     """Set up directories for the current run, creating unique folders based on the timestamp."""
     # data_run_folder = os.path.join(base_dir, data_run)
-    audio_segments = os.path.join(data_run_folder, "audio_segments")
+    audio_segments = os.path.join(data_run, "audio_segments")
     # sessions = os.path.join("data", "sessions")
-    labels = os.path.join(data_run_folder, "labels")
+    labels = os.path.join(data_run, "labels")
     
-    os.makedirs(data_run_folder, exist_ok=True)
+    os.makedirs(data_run, exist_ok=True)
     os.makedirs(audio_segments, exist_ok=True)
     os.makedirs(sessions, exist_ok=True)
     os.makedirs(labels, exist_ok=True)
 
-    return(audio_segments, sessions, data_run_folder, labels)
+    return(audio_segments, sessions, data_run, labels)
 
 def speech_language_instructions(participant_speech_language_tasks_instructions, audio, audio_label_path):
     first_story = False
