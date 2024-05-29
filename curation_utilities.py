@@ -12,15 +12,17 @@ sys.path.append(project_root_dir)
 def parse_arguments():
     """Parse command line arguments including hyperparameters with defaults from Config."""
     parser = argparse.ArgumentParser(description="Experiment script for session processing.")
-    parser.add_argument("--data_run_folder_name", type=str, help="Path to the video folder")
+    parser.add_argument("--data_run_folder_name", type=str, help="Name of the data_run folder")
+    parser.add_argument("--sessions", type=str, help="Path to the audios folder")
+    parser.add_argument("--labels", type=str, help="Path to the label folder")
     return parser.parse_args()
 
-def setup_directories(base_dir, data_run):
+def setup_directories(base_dir, data_run, sessions, labels):
     """Set up directories for the current run, creating unique folders based on the timestamp."""
     data_run_folder = os.path.join(base_dir, data_run)
     audio_segments = os.path.join(data_run_folder, "audio_segments")
-    sessions = os.path.join("data", "sessions")
-    labels = os.path.join(data_run_folder, "labels")
+    # sessions = os.path.join("data", "sessions")
+    # labels = os.path.join(data_run_folder, "labels")
     
     os.makedirs(data_run_folder, exist_ok=True)
     os.makedirs(audio_segments, exist_ok=True)
