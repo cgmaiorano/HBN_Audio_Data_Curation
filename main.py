@@ -10,8 +10,10 @@ def main():
     """This is the main function responsible for audio segment trimming and curation."""
     args = parse_arguments()
     data_run_folder_name = args.data_run_folder_name
+    sessions_path = args.sessions
+    labels_path = args.labels
     
-    audio_segments, sessions, data_run_path, labels = setup_directories("data", data_run_folder_name)
+    audio_segments, sessions, data_run_path, labels = setup_directories("data", data_run_folder_name, sessions_path, labels_path)
     sessions_list = [f for f in os.listdir(sessions) if f.endswith(".wav")]
     
     if not os.path.exists(data_run_path):
