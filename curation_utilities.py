@@ -82,7 +82,7 @@ def speech_language_responses_and_stories(participant_speech_language_tasks_resp
             else:
                 current_task_count = int(line[2][:2])
                 # pass over first loop
-                if current_task_count == 0:
+                if previous_task_count == None:
                     pass
                 # check that the current task count is the correct following task according to protocol order, segment the audio and save to files
                 elif current_task_count == previous_task_count + 1:
