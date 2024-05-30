@@ -66,7 +66,7 @@ def speech_language_responses_and_stories(participant_speech_language_tasks_resp
                     segment = audio[float(previous_end_time)*1000:]
                     output_file_path = os.path.join(participant_reading_language_instruction_and_response, "peggy_babcock.wav")
                     segment.export(output_file_path, format='wav')
-            elif line[2].startswith("story_1") and previous_task_name.startswith("story_0"):
+            elif line[2].startswith("story_1") and previous_task_count == 37:
                 if first_story is True and second_story is True:
                     segment1 = audio[float(story_0_start)*1000:float(start_time)*1000]
                     output_file_path = os.path.join(participant_reading_language_instruction_and_response, "peggy_babcock.wav")
