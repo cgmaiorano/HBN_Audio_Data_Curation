@@ -60,7 +60,7 @@ def speech_language_responses_and_stories(participant_speech_language_tasks_resp
             start_time = line[0]
             end_time = line[1]
             if line[2].startswith("st"):
-                if previous_task_count = 37:
+                if previous_task_count == 37:
                     if line[2].startswith("story_0"):
                         if first_story is True and second_story is True:
                             story_0_start = previous_end_time
