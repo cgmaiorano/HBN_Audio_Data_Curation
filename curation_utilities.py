@@ -59,26 +59,30 @@ def speech_language_responses_and_stories(participant_speech_language_tasks_resp
             line = line.split("\t")
             start_time = line[0]
             end_time = line[1]
-            if line[2].startswith("story_0") and previous_task_count == 37:
-                if first_story is True and second_story is True:
-                    story_0_start = previous_end_time
-                elif first_story is True and second_story is False:
-                    segment = audio[float(previous_end_time)*1000:]
-                    output_file_path = os.path.join(participant_reading_language_instruction_and_response, "peggy_babcock.wav")
-                    segment.export(output_file_path, format='wav')
-            elif line[2].startswith("story_1") and previous_task_count == 37:
-                if first_story is True and second_story is True:
-                    segment1 = audio[float(story_0_start)*1000:float(start_time)*1000]
-                    output_file_path = os.path.join(participant_reading_language_instruction_and_response, "peggy_babcock.wav")
-                    segment1.export(output_file_path, format='wav')
-
-                    segment2 = audio[float(start_time)*1000:]
-                    output_file_path = os.path.join(participant_reading_language_instruction_and_response, "phonetic_kingdom.wav")
-                    segment2.export(output_file_path, format='wav')
-                elif first_story is False and second_story is True:
-                    segment = audio[float(start_time)*1000:]
-                    output_file_path = os.path.join(participant_reading_language_instruction_and_response, "phonetic_kingdom.wav")
-                    segment.export(output_file_path, format='wav')
+            if line[2].startswith("st"):
+                if previous_task_count = 37:
+                    if line[2].startswith("story_0"):
+                        if first_story is True and second_story is True:
+                            story_0_start = previous_end_time
+                        elif first_story is True and second_story is False:
+                            segment = audio[float(previous_end_time)*1000:]
+                            output_file_path = os.path.join(participant_reading_language_instruction_and_response, "peggy_babcock.wav")
+                            segment.export(output_file_path, format='wav')
+                    elif line[2].startswith("story_1"):
+                        if first_story is True and second_story is True:
+                            segment1 = audio[float(story_0_start)*1000:float(start_time)*1000]
+                            output_file_path = os.path.join(participant_reading_language_instruction_and_response, "peggy_babcock.wav")
+                            segment1.export(output_file_path, format='wav')
+        
+                            segment2 = audio[float(start_time)*1000:]
+                            output_file_path = os.path.join(participant_reading_language_instruction_and_response, "phonetic_kingdom.wav")
+                            segment2.export(output_file_path, format='wav')
+                        elif first_story is False and second_story is True:
+                            segment = audio[float(start_time)*1000:]
+                            output_file_path = os.path.join(participant_reading_language_instruction_and_response, "phonetic_kingdom.wav")
+                            segment.export(output_file_path, format='wav')
+                else:
+                    pass
             else:
                 current_task_count = int(line[2][:2])
                 # pass over first loop
