@@ -16,6 +16,11 @@ def parse_arguments():
     parser.add_argument("--sessions", type=str, help="Path to the audios folder")
     return parser.parse_args()
 
+def log_error(error_message, error_log_path):
+    """Log errors to the specified error_log.txt file."""
+    with open(error_log_path, "a") as error_log:
+        error_log.write(error_message + "\n")
+
 def setup_directories(base_dir, data_run, sessions):
     """Set up directories for the current run, creating unique folders based on the timestamp."""
     # data_run_folder = os.path.join(base_dir, data_run)
