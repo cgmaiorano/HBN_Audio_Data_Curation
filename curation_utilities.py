@@ -72,14 +72,14 @@ def speech_language_responses_and_stories(participant_speech_language_tasks_resp
                     segment = audio[float(previous_end_time)*1000:(float(start_time)-5)*1000]
                     output_file_path = os.path.join(participant_speech_language_tasks_responses, "37_passage_explanation_response.wav")
                     segment.export(output_file_path, format='wav')
-                if all(first_story, second_story):
+                if all([first_story, second_story]):
                     story_0_start = float(start_time)-5
                 elif first_story is True and second_story is False:
                     segment = audio[(float(start_time)-5)*1000:]
                     output_file_path = os.path.join(participant_reading_language_instruction_and_response, "peggy_babcock.wav")
                     segment.export(output_file_path, format='wav')
             elif line[2].startswith("story_1"):
-                if all(first_story, second_story):
+                if all([first_story, second_story]):
                     segment1 = audio[float(story_0_start)*1000:float(start_time)*1000]
                     output_file_path = os.path.join(participant_reading_language_instruction_and_response, "peggy_babcock.wav")
                     segment1.export(output_file_path, format='wav')
