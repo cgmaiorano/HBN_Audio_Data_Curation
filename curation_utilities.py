@@ -33,10 +33,13 @@ def setup_directories(base_dir, data_run, sessions):
 def speech_language_instructions(participant_speech_language_tasks_instructions, audio, audio_label_path):
     first_story = False
     second_story = False
+    last_task = False
     with open(audio_label_path) as file:
         for line in file:
             line = line.split("\t")
-            if line[2].startswith("story_0"):
+            if line[2].startswith("37"):
+                last_task = True
+            elif line[2].startswith("story_0"):
                 first_story = True
             elif line[2].startswith("story_1"):
                 second_story = True
@@ -48,9 +51,9 @@ def speech_language_instructions(participant_speech_language_tasks_instructions,
                     segment = audio[float(line[0])*1000:float(line[1])*1000]
                 output_file_path = os.path.join(participant_speech_language_tasks_instructions, f"{line[2][:-1]}_instruction.wav")
                 segment.export(out_f = output_file_path, format='wav')
-    return first_story, second_story
+    return last_task, first_story, second_story
 
-def speech_language_responses_and_stories(participant_speech_language_tasks_responses, participant_reading_language_instruction_and_response, audio, audio_label_path, first_story, second_story):
+def speech_language_responses_and_stories(participant_speech_language_tasks_responses, participant_reading_language_instruction_and_response, audio, audio_label_path, first_story, second_story, last_task):
     with open(audio_label_path) as file:
         previous_task_count = None
         previous_task_name = None
@@ -59,34 +62,34 @@ def speech_language_responses_and_stories(participant_speech_language_tasks_resp
             line = line.split("\t")
             start_time = line[0]
             end_time = line[1]
-            if line[2].startswith("st"):
-                if previous_task_count == 37:
-                    if line[2].startswith("story_0"):
-                        if first_story is True and second_story is True:
-                            story_0_start = previous_end_time
-                        elif first_story is True and second_story is False:
-                            segment = audio[float(previous_end_time)*1000:]
-                            output_file_path = os.path.join(participant_reading_language_instruction_and_response, "peggy_babcock.wav")
-                            segment.export(output_file_path, format='wav')
-                    elif line[2].startswith("story_1"):
-                        if first_story is True and second_story is True:
-                            segment1 = audio[float(story_0_start)*1000:float(start_time)*1000]
-                            output_file_path = os.path.join(participant_reading_language_instruction_and_response, "peggy_babcock.wav")
-                            segment1.export(output_file_path, format='wav')
-        
-                            segment2 = audio[float(start_time)*1000:]
-                            output_file_path = os.path.join(participant_reading_language_instruction_and_response, "phonetic_kingdom.wav")
-                            segment2.export(output_file_path, format='wav')
-                        elif first_story is False and second_story is True:
-                            segment = audio[float(start_time)*1000:]
-                            output_file_path = os.path.join(participant_reading_language_instruction_and_response, "phonetic_kingdom.wav")
-                            segment.export(output_file_path, format='wav')
-                else:
-                    pass
+            if line[2].startswith("story_0"):
+                if last_task is True:
+                    segment = audio[float(previous_end_time)*1000:(float(start_time)-5)*1000]
+                    output_file_path = os.path.join(participant_speech_language_tasks_responses, "37_passage_explanation_response.wav")
+                    segment.export(output_file_path, format='wav')
+                if all(first_story, second_story):
+                    story_0_start = float(start_time)-5
+                elif first_story is True and second_story is False:
+                    segment = audio[(float(start_time)-5)*1000:]
+                    output_file_path = os.path.join(participant_reading_language_instruction_and_response, "peggy_babcock.wav")
+                    segment.export(output_file_path, format='wav')
+            elif line[2].startswith("story_1"):
+                if all(first_story, second_story):
+                    segment1 = audio[float(story_0_start)*1000:float(start_time)*1000]
+                    output_file_path = os.path.join(participant_reading_language_instruction_and_response, "peggy_babcock.wav")
+                    segment1.export(output_file_path, format='wav')
+
+                    segment2 = audio[(float(start_time)-5)*1000:]
+                    output_file_path = os.path.join(participant_reading_language_instruction_and_response, "phonetic_kingdom.wav")
+                    segment2.export(output_file_path, format='wav')
+                elif first_story is False and second_story is True:
+                    segment = audio[(float(start_time)-5)*1000:]
+                    output_file_path = os.path.join(participant_reading_language_instruction_and_response, "phonetic_kingdom.wav")
+                    segment.export(output_file_path, format='wav')
             else:
                 current_task_count = int(line[2][:2])
                 # pass over first loop
-                if previous_task_count == None:
+                if previous_task_count is None:
                     pass
                 # check that the current task count is the correct following task according to protocol order, segment the audio and save to files
                 elif current_task_count == previous_task_count + 1:
@@ -118,7 +121,7 @@ def trim(label_file_path, corresponding_audio_filepath, audio_segments_path):
     os.makedirs(reading_language_instruction_and_response, exist_ok=True)
 
     print("Trimming Speech Language Task Instructions")
-    first_story, second_story = speech_language_instructions(speech_language_tasks_instructions, audio, label_file_path)
+    last_task, first_story, second_story = speech_language_instructions(speech_language_tasks_instructions, audio, label_file_path)
 
     print("Trimming Responses and Stories")
-    speech_language_responses_and_stories(speech_language_tasks_responses, reading_language_instruction_and_response, audio, label_file_path, first_story, second_story)
+    speech_language_responses_and_stories(speech_language_tasks_responses, reading_language_instruction_and_response, audio, label_file_path, first_story, second_story, last_task)
